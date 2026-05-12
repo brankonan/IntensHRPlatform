@@ -2,8 +2,6 @@ using AutoMapper;
 using IntensHRPlatform.Application.DTOs;
 using IntensHRPlatform.Application.Interfaces;
 using IntensHRPlatform.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata;
-
 namespace IntensHRPlatform.Application.Services;
 
 public class CandidateService : ICandidateService {
@@ -38,7 +36,7 @@ public class CandidateService : ICandidateService {
         var candidate = new Candidate
         {
             FullName = dto.FullName,
-            DateOfBirth = dto.DateOfBirth,
+            DateOfBirth = DateTime.SpecifyKind(dto.DateOfBirth, DateTimeKind.Utc),
             ContactNumber = dto.ContactNumber,
             Email = dto.Email
         };
@@ -59,9 +57,8 @@ public class CandidateService : ICandidateService {
         if (candidate.CandidateSkills.Any(cs => cs.SkillId == skillId))
             throw new Exception("Kandidat vec ima taj skill.");
 
-        candidate.CandidateSkills.Add(new CandidateSkill { CandidateId =
-            candidateId, SkillId = skillId });
-            await _candidateRepository.UpdateAsync(candidate);
+        candidate.CandidateSkills.Add(new CandidateSkill { CandidateId = candidateId, SkillId = skillId });
+        await _candidateRepository.UpdateAsync(candidate);
     }
 
     public async Task RemoveSkillFromCandidateAsync(int candidateId, int skillId)
