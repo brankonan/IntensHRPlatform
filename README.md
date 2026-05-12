@@ -1,10 +1,19 @@
 # IntensHRPlatform
 
 ## Pokretanje
+
+### Backend
 1. Klonirati repozitorijum
 2. Promeniti connection string u appsettings.json
 3. dotnet ef database update
 4. Pokrenuti projekat
+
+### Frontend
+1. `cd gr-frontend`
+2. `npm install`
+3. `npm run dev`
+
+> Frontend koristi `http://localhost:5173`, backend mora biti pokrenut na `https://localhost:44311`
 
 ## API Endpointi
 | Metoda | URL | Opis |
